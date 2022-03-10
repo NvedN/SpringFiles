@@ -29,64 +29,70 @@ public class SpringConfig implements WebMvcConfigurer
 {
 
 		private final ApplicationContext applicationContext;
-//
+
+		//
 		@Autowired
 		public SpringConfig(ApplicationContext applicationContext)
 		{
 				this.applicationContext = applicationContext;
 		}
+		//		@Bean
+		//		public SpringResourceTemplateResolver templateResolver()
+		//		{
+		//				SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
+		//				templateResolver.setApplicationContext(applicationContext);
+		//				templateResolver.setPrefix("/WEB-INF/views/");
+		//				templateResolver.setSuffix(".html");
+		//				return templateResolver;
+		//		}
+		//		@Bean
+		//		public SpringTemplateEngine templateEngine()
+		//		{
+		//				SpringTemplateEngine templateEngine = new SpringTemplateEngine();
+		//				templateEngine.setTemplateResolver(templateResolver());
+		//				templateEngine.setEnableSpringELCompiler(true);
+		//				return templateEngine;
+		//		}
 
-//		@Bean
-//		public SpringResourceTemplateResolver templateResolver()
-//		{
-//				SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
-//				templateResolver.setApplicationContext(applicationContext);
-//				templateResolver.setPrefix("/WEB-INF/views/");
-//				templateResolver.setSuffix(".html");
-//				return templateResolver;
-//		}
-
-//		@Bean
-//		public SpringTemplateEngine templateEngine()
-//		{
-//				SpringTemplateEngine templateEngine = new SpringTemplateEngine();
-//				templateEngine.setTemplateResolver(templateResolver());
-//				templateEngine.setEnableSpringELCompiler(true);
-//				return templateEngine;
-//		}
-
-//		@Autowired
-//		WebApplicationContext webApplicationContext;
-//
+		//		@Autowired
+		//		WebApplicationContext webApplicationContext;
+		//
 		@Bean
-		public SpringResourceTemplateResolver templateResolver(){
+		public SpringResourceTemplateResolver templateResolver()
+		{
 				SpringResourceTemplateResolver templateResolver = new SpringResourceTemplateResolver();
 				templateResolver.setApplicationContext(applicationContext);
 				templateResolver.setPrefix("/WEB-INF/views/");
 				templateResolver.setSuffix("");
 				return templateResolver;
 		}
-//
+
+		//
 		@Bean
-		public SpringTemplateEngine templateEngine() {
-				SpringTemplateEngine springTemplateEngine= new SpringTemplateEngine();
+		public SpringTemplateEngine templateEngine()
+		{
+				SpringTemplateEngine springTemplateEngine = new SpringTemplateEngine();
 				springTemplateEngine.setTemplateResolver(templateResolver());
 				springTemplateEngine.setEnableSpringELCompiler(true);
 				return springTemplateEngine;
 		}
-//
+
+		//
 		@Bean
-		public ThymeleafViewResolver thymeleafViewResolver(){
+		public ThymeleafViewResolver thymeleafViewResolver()
+		{
 				final ThymeleafViewResolver viewResolver = new ThymeleafViewResolver();
-				viewResolver.setViewNames(new String[] {"*.html"});
-				viewResolver.setExcludedViewNames(new String[] {"*.jsp"});
+				viewResolver.setViewNames(new String[] { "*.html" });
+				viewResolver.setExcludedViewNames(new String[] { "*.jsp" });
 				viewResolver.setTemplateEngine(templateEngine());
 				viewResolver.setCharacterEncoding("UTF-8");
 				return viewResolver;
 		}
-//
+
+		//
 		@Bean
-		public InternalResourceViewResolver jspViewResolver(){
+		public InternalResourceViewResolver jspViewResolver()
+		{
 				final InternalResourceViewResolver viewResolver = new InternalResourceViewResolver();
 				viewResolver.setOrder(10);
 				viewResolver.setViewClass(JstlView.class);
@@ -95,7 +101,6 @@ public class SpringConfig implements WebMvcConfigurer
 				viewResolver.setViewNames("*.jsp");
 				return viewResolver;
 		}
-
 
 		@Override
 		public void configureViewResolvers(ViewResolverRegistry registry)
@@ -121,8 +126,6 @@ public class SpringConfig implements WebMvcConfigurer
 		{
 				return new JdbcTemplate(dataSource());
 		}
-
-
 
 		@Bean(name = "multipartResolver")
 		public CommonsMultipartResolver multipartResolver()

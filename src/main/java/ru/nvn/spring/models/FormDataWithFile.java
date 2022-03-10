@@ -8,6 +8,10 @@ public class FormDataWithFile {
 		private String email;
 		private MultipartFile file;
 
+		public static final String TXT_TYPE = "text/plain";
+		public static final String EXCEL_TYPE = "application/vnd.openxmlformats-officedocument.spreadsheetml.sheet";
+
+
 		public String getName() {
 				return name;
 		}

@@ -1,17 +1,17 @@
 package ru.nvn.spring.controler;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.ui.ModelMap;
-import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import ru.nvn.spring.application.FileParseUtil;
 import ru.nvn.spring.models.FormDataWithFile;
 
-import javax.validation.Valid;
+import java.io.IOException;
 
-
+@Slf4j
 @Controller
 @RequestMapping("/file")
 public class FileController
@@ -57,4 +57,18 @@ public class FileController
 				return "file/fileUploadView.jsp";
 
 		}
+
+		@PostMapping("/dropZoneUpload")
+		public String upload(@ModelAttribute("file") final MultipartFile file,final ModelMap modelMap) throws Exception
+		{
+				modelMap.addAttribute("file", file);
+				FileParseUtil.parseFile(file);
+				return "file/fileUploadView.jsp";
+		}
+		@GetMapping( "/dropZoneUpload")
+		public String dragAndDropPage(@ModelAttribute("file") MultipartFile file) {
+				return "file/dragAndDrop.html";
+		}
+
+
 }
